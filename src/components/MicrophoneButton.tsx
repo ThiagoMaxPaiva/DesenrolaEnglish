@@ -123,6 +123,13 @@ export default function MicrophoneButton({
 
   return (
     <div className="flex flex-col items-center gap-2">
+      {/* Fallback alert for non-supported browsers */}
+      {!isSupported && (
+        <div className="bg-red-900/50 border border-red-500 p-3 rounded-lg max-w-sm mb-2 text-center text-xs text-red-100">
+          <strong>Aviso:</strong> Seu navegador não suporta captura de voz nativa. Recomendamos usar o Google Chrome ou Edge para a melhor experiência.
+        </div>
+      )}
+
       {/* Mic Button */}
       <motion.button
         type="button"
@@ -133,12 +140,13 @@ export default function MicrophoneButton({
         onTouchStart={handleMouseDown}
         onTouchEnd={handleMouseUp}
         onClick={mode === 'toggle' ? handleClick : undefined}
+        aria-label={isListening ? "Parar gravação" : "Iniciar gravação"}
         className={`
           relative w-16 h-16 rounded-full flex items-center justify-center
-          transition-all duration-300
-          disabled:opacity-50 disabled:cursor-not-allowed
+          transition-all duration-300 focus-visible:ring-4 focus-visible:ring-cyan-500
+          disabled:opacity-40 disabled:cursor-not-allowed
           ${isListening
-            ? 'bg-red-500/20 border-2 border-red-400 shadow-[0_0_30px_rgba(239,68,68,0.4)]'
+            ? 'bg-red-600/30 border-2 border-red-400 shadow-[0_0_30px_rgba(239,68,68,0.5)]'
             : 'bg-cyan-500/10 border-2 border-cyan-400/50 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)]'
           }
         `}
