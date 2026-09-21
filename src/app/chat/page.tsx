@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useChat } from 'ai/react';
 import {
   Send, ArrowLeft, Volume2, VolumeX, Bot, User,
-  Sparkles, Loader2, AlertCircle
+  Sparkles, Loader2, AlertCircle, Check
 } from 'lucide-react';
 import MicrophoneButton from '@/components/MicrophoneButton';
 import GlassButton from '@/components/GlassButton';
@@ -21,7 +21,7 @@ function ChatInterface() {
   
   const currentDay = weeklyPlan.find(d => d.id === dayId);
 
-  const { level, incrementStreak } = useAppStore();
+  const { level, incrementStreak, updateTaskStatus } = useAppStore();
 
   const [isMounted, setIsMounted] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -132,19 +132,34 @@ function ChatInterface() {
           </div>
         </div>
 
-        <button
-          onClick={() => {
-            setAutoSpeak(!autoSpeak);
-            if (isSpeaking) stopSpeaking();
-          }}
-          className={`p-2 rounded-lg transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white/50 ${
-            autoSpeak ? 'bg-white/10 text-white border border-white/20' : 'bg-white/5 text-gray-500 border border-white/5'
-          }`}
-          title={autoSpeak ? 'Auto-speak ON' : 'Auto-speak OFF'}
-        >
-          {autoSpeak ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-          <span className="sr-only">Alternar leitura automática de mensagens</span>
-        </button>
+        <div className="flex items-center gap-2">
+          {dayId && (
+            <button
+              onClick={() => {
+                updateTaskStatus(dayId, 'completed');
+                router.push('/dashboard');
+              }}
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all focus-visible:ring-2 focus-visible:ring-white/50"
+            >
+              <Check className="w-3.5 h-3.5" />
+              Concluir
+            </button>
+          )}
+
+          <button
+            onClick={() => {
+              setAutoSpeak(!autoSpeak);
+              if (isSpeaking) stopSpeaking();
+            }}
+            className={`p-2 rounded-lg transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white/50 ${
+              autoSpeak ? 'bg-white/10 text-white border border-white/20' : 'bg-white/5 text-gray-500 border border-white/5'
+            }`}
+            title={autoSpeak ? 'Auto-speak ON' : 'Auto-speak OFF'}
+          >
+            {autoSpeak ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            <span className="sr-only">Alternar leitura automática de mensagens</span>
+          </button>
+        </div>
       </header>
 
       {/* Messages area */}
@@ -166,14 +181,14 @@ function ChatInterface() {
               className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.role === 'assistant' && (
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-white/10 border border-white/10 flex items-center justify-center flex-shrink-0">
                   <Bot className="w-4 h-4 text-white font-bold" />
                 </div>
               )}
 
               <div className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 shadow-sm ${
                   message.role === 'user'
-                    ? 'bg-cyan-600/20 border border-cyan-500/20 text-cyan-50'
+                    ? 'bg-white/20 border border-white/20 text-white'
                     : 'bg-white/5 backdrop-blur-md border border-gray-800 text-gray-100'
                 }`}
               >
@@ -182,7 +197,7 @@ function ChatInterface() {
                   {message.role === 'assistant' && !isLoading && (
                     <button
                       onClick={() => speakMessage(message.content, message.id)}
-                      className={`p-1 rounded transition-colors focus-visible:ring-1 focus-visible:ring-cyan-500 ${
+                      className={`p-1 rounded transition-colors focus-visible:ring-1 focus-visible:ring-white/50 ${
                         speakingMessageId === message.id ? 'text-white font-bold animate-pulse' : 'text-gray-500 hover:text-white font-bold'
                       }`}
                       aria-label="Ouvir mensagem"
@@ -194,8 +209,8 @@ function ChatInterface() {
               </div>
 
               {message.role === 'user' && (
-                <div className="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
-                  <User className="w-4 h-4 text-purple-400" />
+                <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0">
+                  <User className="w-4 h-4 text-white" />
                 </div>
               )}
             </motion.div>
@@ -204,7 +219,7 @@ function ChatInterface() {
 
         {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3 justify-start">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-white/10 border border-white/10 flex items-center justify-center">
               <Bot className="w-4 h-4 text-white font-bold" />
             </div>
             <div className="bg-white/5 backdrop-blur-md border border-gray-800 rounded-2xl px-4 py-3 flex items-center gap-2">
@@ -229,7 +244,7 @@ function ChatInterface() {
               onChange={handleInputChange}
               placeholder="Type your message in English..."
               disabled={isLoading}
-              className="flex-1 bg-white/5 backdrop-blur-md border border-gray-700 rounded-xl px-4 py-3 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all disabled:opacity-50"
+              className="flex-1 bg-white/5 backdrop-blur-md border border-gray-700 rounded-xl px-4 py-3 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-all disabled:opacity-50"
               aria-label="Campo de texto da mensagem"
             />
             <GlassButton type="submit" variant="primary" size="md" disabled={!input.trim() || isLoading} className="shrink-0" aria-label="Enviar mensagem">

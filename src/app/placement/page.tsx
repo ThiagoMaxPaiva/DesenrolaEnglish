@@ -140,7 +140,7 @@ export default function PlacementTestPage() {
               transition={{ duration: 0.4 }}
             >
               <motion.div
-                className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center border border-white/10"
+                className="w-20 h-20 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10"
                 animate={{ rotate: [0, 5, -5, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
@@ -217,7 +217,7 @@ export default function PlacementTestPage() {
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
                     isSpeakingPrompt
                       ? 'bg-cyan-500/20 border border-cyan-400/50 text-cyan-300'
-                      : 'bg-gray-800/50 border border-gray-700/50 text-gray-400 hover:text-cyan-300 hover:border-white/10'
+                      : 'bg-gray-800/50 border border-gray-700/50 text-gray-400 hover:text-white hover:border-white/10'
                   }`}
                 >
                   <Volume2 className={`w-5 h-5 ${isSpeakingPrompt ? 'animate-pulse' : ''}`} />
@@ -243,7 +243,7 @@ export default function PlacementTestPage() {
                           : showFeedback && option === currentQuestion.options![0]
                           ? 'bg-emerald-500/10 border-emerald-400/50 text-emerald-300'
                           : selectedOption === option
-                          ? 'bg-cyan-500/10 border-cyan-400/50 text-cyan-300'
+                          ? 'bg-white/10 border-white/30 text-white'
                           : 'bg-white/5 backdrop-blur-md/30 border-gray-800/50 text-gray-300 hover:border-gray-700/50'
                       }`}
                       whileHover={showFeedback ? {} : { scale: 1.02 }}

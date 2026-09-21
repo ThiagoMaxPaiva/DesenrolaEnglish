@@ -67,9 +67,22 @@ export const useAppStore = create<AppState>()(
       setHasCompletedPlacement: (value) => set({ hasCompletedPlacement: value }),
 
       updateTaskStatus: (taskId, status) =>
-        set((state) => ({
-          weeklyProgress: { ...state.weeklyProgress, [taskId]: status },
-        })),
+        set((state) => {
+          const newProgress = { ...state.weeklyProgress, [taskId]: status };
+          
+          if (status === 'completed') {
+            const daysOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+            const currentIndex = daysOrder.indexOf(taskId);
+            if (currentIndex !== -1 && currentIndex < daysOrder.length - 1) {
+              const nextDay = daysOrder[currentIndex + 1];
+              if (newProgress[nextDay] === 'locked') {
+                newProgress[nextDay] = 'available';
+              }
+            }
+          }
+
+          return { weeklyProgress: newProgress };
+        }),
 
       resetAll: () =>
         set({
