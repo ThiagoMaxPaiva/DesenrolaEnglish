@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/* ─── Desenrola English: Cyberpunk Dark Theme ─── */
+
+@theme inline {
+  --color-background: #030712;
+  --color-foreground: #e5e7eb;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Force dark background globally */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: #030712;
+  color: #e5e7eb;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* ─── Custom scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.3);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 240, 255, 0.15) transparent;
+}
+
+/* ─── Selection color ─── */
+::selection {
+  background: rgba(0, 240, 255, 0.2);
+  color: #fff;
+}
+
+/* ─── Focus ring ─── */
+*:focus-visible {
+  outline: 2px solid rgba(0, 240, 255, 0.4);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
