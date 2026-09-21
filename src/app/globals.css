@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
-/* ─── Desenrola English: Cyberpunk Dark Theme ─── */
+/* ─── Desenrola English: Minimalist Dark Glassmorphism ─── */
 
 @theme inline {
-  --color-background: #030712;
-  --color-foreground: #e5e7eb;
+  --color-background: #000000;
+  --color-foreground: #ffffff;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -15,14 +15,16 @@ html {
 }
 
 body {
-  background: #030712;
-  color: #e5e7eb;
+  background: #000000;
+  color: #ffffff;
   font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ─── Custom scrollbar ─── */
+/* ─── Custom minimalist scrollbar ─── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -30,29 +32,29 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 240, 255, 0.25); /* Improved contrast */
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 240, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 240, 255, 0.25) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
 /* ─── Selection color ─── */
 ::selection {
-  background: rgba(0, 240, 255, 0.3);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
 }
 
 /* ─── Focus ring for Accessibility ─── */
 *:focus-visible {
-  outline: 2px solid rgba(0, 240, 255, 0.8);
-  outline-offset: 3px;
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
   border-radius: 4px;
 }
 

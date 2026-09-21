@@ -3,14 +3,14 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Rocket, Mic, Brain, Trophy, ChevronRight, Sparkles, Globe2 } from 'lucide-react';
-import NeonButton from '@/components/NeonButton';
+import GlassButton from '@/components/GlassButton';
 
 const features = [
   {
     icon: Mic,
     title: 'Voice-First Learning',
     description: 'Practice speaking from day one. Our AI listens, corrects, and guides your pronunciation.',
-    color: 'text-cyan-400',
+    color: 'text-white font-bold',
     glow: 'group-hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]',
   },
   {
@@ -60,12 +60,12 @@ export default function LandingPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gray-950 relative overflow-hidden">
+    <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Gradient orbs */}
-        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-cyan-500/5 blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-purple-500/5 blur-[120px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-white/5 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-white/5 blur-[120px]" />
         <div className="absolute top-[40%] left-[50%] w-[400px] h-[400px] rounded-full bg-pink-500/3 blur-[100px]" />
 
         {/* Grid overlay */}
@@ -87,7 +87,7 @@ export default function LandingPage() {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center gap-2">
-          <Sparkles className="w-6 h-6 text-cyan-400" />
+          <Sparkles className="w-6 h-6 text-white font-bold" />
           <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
             Desenrola English
           </span>
@@ -107,7 +107,7 @@ export default function LandingPage() {
             variants={fadeInUp}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-8"
           >
-            <Rocket className="w-4 h-4 text-cyan-400" />
+            <Rocket className="w-4 h-4 text-white font-bold" />
             <span className="text-sm text-cyan-300 font-medium">Missão: Fluência até 2027</span>
           </motion.div>
 
@@ -136,8 +136,8 @@ export default function LandingPage() {
 
           {/* CTA Button */}
           <motion.div variants={fadeInUp}>
-            <NeonButton
-              variant="gradient"
+            <GlassButton
+              variant="primary"
               size="lg"
               onClick={() => router.push('/placement')}
               className="text-lg"
@@ -145,7 +145,7 @@ export default function LandingPage() {
               <Mic className="w-5 h-5" />
               Começar Teste de Nível
               <ChevronRight className="w-5 h-5" />
-            </NeonButton>
+            </GlassButton>
           </motion.div>
 
           {/* Stats */}
@@ -181,7 +181,7 @@ export default function LandingPage() {
             className="text-2xl md:text-3xl font-bold text-center text-white mb-12"
           >
             Por que o{' '}
-            <span className="text-cyan-400">Desenrola</span> é diferente?
+            <span className="text-white font-bold">Desenrola</span> é diferente?
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -189,7 +189,7 @@ export default function LandingPage() {
               <motion.div
                 key={feature.title}
                 variants={fadeInUp}
-                className={`group relative p-6 rounded-2xl bg-gray-900/50 border border-gray-800/50
+                className={`group relative p-6 rounded-2xl bg-white/5 backdrop-blur-md/50 border border-gray-800/50
                   hover:border-gray-700/50 transition-all duration-300 backdrop-blur-sm ${feature.glow}`}
               >
                 <feature.icon className={`w-10 h-10 ${feature.color} mb-4`} />

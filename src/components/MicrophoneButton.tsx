@@ -143,11 +143,11 @@ export default function MicrophoneButton({
         aria-label={isListening ? "Parar gravação" : "Iniciar gravação"}
         className={`
           relative w-16 h-16 rounded-full flex items-center justify-center
-          transition-all duration-300 focus-visible:ring-4 focus-visible:ring-cyan-500
+          transition-all duration-300 focus-visible:ring-4 focus-visible:ring-white/50
           disabled:opacity-40 disabled:cursor-not-allowed
           ${isListening
-            ? 'bg-red-600/30 border-2 border-red-400 shadow-[0_0_30px_rgba(239,68,68,0.5)]'
-            : 'bg-cyan-500/10 border-2 border-cyan-400/50 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.3)]'
+            ? 'bg-white/20 border-2 border-white shadow-[0_0_30px_rgba(255,255,255,0.4)]'
+            : 'bg-white/5 border border-white/20 hover:border-white/40 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]'
           }
         `}
         whileHover={disabled ? {} : { scale: 1.1 }}
@@ -160,7 +160,7 @@ export default function MicrophoneButton({
               {[0, 1, 2].map((i) => (
                 <motion.div
                   key={i}
-                  className="absolute inset-0 rounded-full border-2 border-red-400/30"
+                  className="absolute inset-0 rounded-full border-2 border-white/30"
                   initial={{ scale: 1, opacity: 0.6 }}
                   animate={{ scale: 1.5 + i * 0.3, opacity: 0 }}
                   transition={{
@@ -177,11 +177,11 @@ export default function MicrophoneButton({
 
         {/* Icon */}
         {isListening ? (
-          <Mic className="w-7 h-7 text-red-400 relative z-10" />
+          <Mic className="w-7 h-7 text-white relative z-10" />
         ) : !isSupported ? (
           <MicOff className="w-7 h-7 text-gray-500 relative z-10" />
         ) : (
-          <Mic className="w-7 h-7 text-cyan-400 relative z-10" />
+          <Mic className="w-7 h-7 text-gray-300 relative z-10" />
         )}
       </motion.button>
 
@@ -190,7 +190,7 @@ export default function MicrophoneButton({
         {isListening ? (
           <motion.p
             key="listening"
-            className="text-xs text-red-400 font-medium"
+            className="text-xs text-white font-medium"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
@@ -233,7 +233,7 @@ export default function MicrophoneButton({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+            <AlertCircle className="w-4 h-4 text-white flex-shrink-0" />
             <p className="text-xs text-red-300">{error}</p>
           </motion.div>
         )}

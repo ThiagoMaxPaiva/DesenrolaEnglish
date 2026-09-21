@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Volume2, ChevronRight, RotateCcw, Sparkles, CheckCircle2 } from 'lucide-react';
-import NeonButton from '@/components/NeonButton';
+import GlassButton from '@/components/GlassButton';
 import MicrophoneButton from '@/components/MicrophoneButton';
 import ProgressBar from '@/components/ProgressBar';
 import LevelBadge from '@/components/LevelBadge';
@@ -120,11 +120,11 @@ export default function PlacementTestPage() {
   const result = phase === 'result' ? calculateLevel(totalScore) : null;
 
   return (
-    <div className="min-h-screen bg-gray-950 relative overflow-hidden">
+    <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-500/5 blur-[120px]" />
-        <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-[120px]" />
+        <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-white/5 blur-[120px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-white/5 blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 py-12">
@@ -140,11 +140,11 @@ export default function PlacementTestPage() {
               transition={{ duration: 0.4 }}
             >
               <motion.div
-                className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center border border-cyan-500/30"
+                className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center border border-white/10"
                 animate={{ rotate: [0, 5, -5, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
-                <Sparkles className="w-10 h-10 text-cyan-400" />
+                <Sparkles className="w-10 h-10 text-white font-bold" />
               </motion.div>
 
               <div>
@@ -157,29 +157,29 @@ export default function PlacementTestPage() {
                 </p>
               </div>
 
-              <div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-800/50 w-full max-w-md">
+              <div className="bg-white/5 backdrop-blur-md/50 rounded-2xl p-6 border border-gray-800/50 w-full max-w-md">
                 <h3 className="text-white font-semibold mb-3">Como funciona:</h3>
                 <ul className="text-left text-gray-400 text-sm space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-400 mt-0.5">▶</span>
+                    <span className="text-white font-bold mt-0.5">▶</span>
                     <span>5 desafios de dificuldade crescente</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-400 mt-0.5">▶</span>
+                    <span className="text-white font-bold mt-0.5">▶</span>
                     <span>Ouça o prompt e responda com sua voz</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-400 mt-0.5">▶</span>
+                    <span className="text-white font-bold mt-0.5">▶</span>
                     <span>Receba sua classificação: Faixa Branca, Azul ou Preta</span>
                   </li>
                 </ul>
               </div>
 
-              <NeonButton variant="gradient" size="lg" onClick={() => setPhase('testing')}>
+              <GlassButton variant="primary" size="lg" onClick={() => setPhase('testing')}>
                 <Volume2 className="w-5 h-5" />
                 Iniciar Teste
                 <ChevronRight className="w-5 h-5" />
-              </NeonButton>
+              </GlassButton>
             </motion.div>
           )}
 
@@ -207,7 +207,7 @@ export default function PlacementTestPage() {
               </div>
 
               {/* Prompt card */}
-              <div className="bg-gray-900/50 rounded-2xl p-6 border border-gray-800/50">
+              <div className="bg-white/5 backdrop-blur-md/50 rounded-2xl p-6 border border-gray-800/50">
                 <p className="text-gray-300 mb-4">{currentQuestion.prompt}</p>
 
                 {/* Audio prompt button */}
@@ -217,7 +217,7 @@ export default function PlacementTestPage() {
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
                     isSpeakingPrompt
                       ? 'bg-cyan-500/20 border border-cyan-400/50 text-cyan-300'
-                      : 'bg-gray-800/50 border border-gray-700/50 text-gray-400 hover:text-cyan-300 hover:border-cyan-500/30'
+                      : 'bg-gray-800/50 border border-gray-700/50 text-gray-400 hover:text-cyan-300 hover:border-white/10'
                   }`}
                 >
                   <Volume2 className={`w-5 h-5 ${isSpeakingPrompt ? 'animate-pulse' : ''}`} />
@@ -244,7 +244,7 @@ export default function PlacementTestPage() {
                           ? 'bg-emerald-500/10 border-emerald-400/50 text-emerald-300'
                           : selectedOption === option
                           ? 'bg-cyan-500/10 border-cyan-400/50 text-cyan-300'
-                          : 'bg-gray-900/30 border-gray-800/50 text-gray-300 hover:border-gray-700/50'
+                          : 'bg-white/5 backdrop-blur-md/30 border-gray-800/50 text-gray-300 hover:border-gray-700/50'
                       }`}
                       whileHover={showFeedback ? {} : { scale: 1.02 }}
                       whileTap={showFeedback ? {} : { scale: 0.98 }}
@@ -262,7 +262,7 @@ export default function PlacementTestPage() {
                       mode="hold"
                     />
                   ) : (
-                    <div className="bg-gray-900/50 rounded-2xl p-4 border border-gray-800/50 w-full">
+                    <div className="bg-white/5 backdrop-blur-md/50 rounded-2xl p-4 border border-gray-800/50 w-full">
                       <p className="text-xs text-gray-500 mb-1">You said:</p>
                       <p className="text-gray-300">{spokenAnswer || '(no speech detected)'}</p>
                     </div>
@@ -277,10 +277,10 @@ export default function PlacementTestPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <NeonButton variant="cyan" onClick={handleNext}>
+                  <GlassButton variant="primary" onClick={handleNext}>
                     {currentIndex + 1 >= totalQuestions ? 'See Results' : 'Next Question'}
                     <ChevronRight className="w-4 h-4" />
-                  </NeonButton>
+                  </GlassButton>
                 </motion.div>
               )}
             </motion.div>
@@ -309,7 +309,7 @@ export default function PlacementTestPage() {
               </div>
 
               <motion.div
-                className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800/50 w-full max-w-md"
+                className="bg-white/5 backdrop-blur-md/50 rounded-2xl p-8 border border-gray-800/50 w-full max-w-md"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4 }}
@@ -320,19 +320,19 @@ export default function PlacementTestPage() {
                 <p className="text-gray-300 mt-4">{result.levelDescription}</p>
                 <div className="mt-4 pt-4 border-t border-gray-800/50">
                   <span className="text-sm text-gray-500">Score: </span>
-                  <span className="text-lg font-bold text-cyan-400">{totalScore} points</span>
+                  <span className="text-lg font-bold text-white font-bold">{totalScore} points</span>
                 </div>
               </motion.div>
 
               <div className="flex gap-4">
-                <NeonButton variant="purple" onClick={handleRestart}>
+                <GlassButton variant="secondary" onClick={handleRestart}>
                   <RotateCcw className="w-4 h-4" />
                   Refazer Teste
-                </NeonButton>
-                <NeonButton variant="gradient" onClick={() => router.push('/dashboard')}>
+                </GlassButton>
+                <GlassButton variant="primary" onClick={() => router.push('/dashboard')}>
                   Ir para Dashboard
                   <ChevronRight className="w-4 h-4" />
-                </NeonButton>
+                </GlassButton>
               </div>
             </motion.div>
           )}

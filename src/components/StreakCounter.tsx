@@ -10,7 +10,7 @@ interface StreakCounterProps {
 export default function StreakCounter({ streak }: StreakCounterProps) {
   return (
     <motion.div
-      className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl px-5 py-3"
+      className="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-3"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, type: 'spring' }}
@@ -28,25 +28,25 @@ export default function StreakCounter({ streak }: StreakCounterProps) {
         }}
       >
         {streak > 0 ? (
-          <Flame className="w-7 h-7 text-orange-400 drop-shadow-[0_0_8px_rgba(251,146,60,0.6)]" />
+          <Flame className="w-7 h-7 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
         ) : (
           <Zap className="w-7 h-7 text-gray-500" />
         )}
       </motion.div>
 
+      {/* Counter text */}
       <div className="flex flex-col">
-        <motion.span
-          className="text-2xl font-bold text-white leading-none"
-          key={streak}
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 300 }}
-        >
-          {streak}
-        </motion.span>
-        <span className="text-xs text-gray-400 font-medium">
-          {streak === 1 ? 'day streak' : 'day streak'}
+        <span className="text-sm text-gray-400 font-medium leading-none mb-1 uppercase tracking-wider">
+          Streak
         </span>
+        <div className="flex items-baseline gap-1">
+          <span className="text-2xl font-black text-white leading-none">
+            {streak}
+          </span>
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+            Days
+          </span>
+        </div>
       </div>
 
       {/* Milestone indicators */}

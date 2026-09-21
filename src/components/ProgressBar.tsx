@@ -19,49 +19,37 @@ export default function ProgressBar({
 }: ProgressBarProps) {
   const clampedValue = Math.min(100, Math.max(0, value));
 
-  const heightClasses = {
+  const sizeStyles = {
     sm: 'h-2',
     md: 'h-3',
     lg: 'h-4',
   };
-
-  const gradientClasses = {
-    cyan: 'from-cyan-500 to-cyan-400',
-    purple: 'from-purple-500 to-purple-400',
-    gradient: 'from-cyan-500 via-purple-500 to-pink-500',
-  };
-
   return (
     <div className="w-full">
+      {/* Label and Percentage */}
       {(label || showPercentage) && (
-        <div className="flex justify-between items-center mb-2">
-          {label && (
-            <span className="text-sm text-gray-400 font-medium">{label}</span>
-          )}
+        <div className="flex justify-between items-end mb-2">
+          {label && <span className="text-sm font-semibold text-gray-300">{label}</span>}
           {showPercentage && (
-            <span className="text-sm font-bold text-cyan-400">
-              {Math.round(clampedValue)}%
-            </span>
+            <span className="text-sm font-bold text-white tracking-widest">{Math.round(clampedValue)}%</span>
           )}
         </div>
       )}
+
+      {/* Progress Track */}
       <div
-        className={`w-full bg-gray-800/50 rounded-full overflow-hidden ${heightClasses[size]} backdrop-blur-sm border border-gray-700/50`}
+        className={`relative w-full rounded-full overflow-hidden bg-white/5 border border-white/10 ${sizeStyles[size]}`}
       >
+        {/* Progress Fill */}
         <motion.div
-          className={`h-full rounded-full bg-gradient-to-r ${gradientClasses[variant]} shadow-lg`}
+          className="absolute top-0 left-0 h-full rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.3)]"
           initial={{ width: 0 }}
           animate={{ width: `${clampedValue}%` }}
           transition={{ duration: 1, ease: 'easeOut' }}
-          style={{
-            boxShadow:
-              variant === 'cyan'
-                ? '0 0 15px rgba(0,240,255,0.4)'
-                : variant === 'purple'
-                ? '0 0 15px rgba(168,85,247,0.4)'
-                : '0 0 15px rgba(0,240,255,0.3), 0 0 15px rgba(168,85,247,0.3)',
-          }}
         />
+        
+        {/* Subtle shine on top of progress */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent rounded-full mix-blend-overlay pointer-events-none" />
       </div>
     </div>
   );

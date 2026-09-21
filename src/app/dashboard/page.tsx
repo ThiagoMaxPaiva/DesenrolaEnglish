@@ -10,7 +10,7 @@ import { TaskStatus, WeekDay } from '@/types';
 import ProgressBar from '@/components/ProgressBar';
 import StreakCounter from '@/components/StreakCounter';
 import LevelBadge from '@/components/LevelBadge';
-import NeonButton from '@/components/NeonButton';
+import GlassButton from '@/components/GlassButton';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -60,11 +60,11 @@ export default function DashboardPage() {
   if (!hasCompletedPlacement) return null;
 
   return (
-    <div className="min-h-screen bg-gray-950 relative overflow-hidden">
+    <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-15%] left-[20%] w-[400px] h-[400px] rounded-full bg-cyan-500/5 blur-[120px]" />
-        <div className="absolute bottom-[-15%] right-[10%] w-[400px] h-[400px] rounded-full bg-purple-500/5 blur-[120px]" />
+        <div className="absolute top-[-15%] left-[20%] w-[400px] h-[400px] rounded-full bg-white/5 blur-[120px]" />
+        <div className="absolute bottom-[-15%] right-[10%] w-[400px] h-[400px] rounded-full bg-white/5 blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-8">
@@ -98,7 +98,7 @@ export default function DashboardPage() {
 
         {/* Weekly Progress */}
         <motion.div
-          className="mb-10 bg-gray-900/50 border border-gray-800 rounded-2xl p-6 backdrop-blur-sm"
+          className="mb-10 bg-white/5 backdrop-blur-md/50 border border-gray-800 rounded-2xl p-6 backdrop-blur-sm"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -108,7 +108,7 @@ export default function DashboardPage() {
               <h2 className="text-lg font-semibold text-gray-100">Progresso Semanal</h2>
               <p className="text-gray-400 text-sm">{completedCount} de 7 missões completas</p>
             </div>
-            <span className="text-cyan-400 font-bold font-mono">{Math.round(weekProgress)}%</span>
+            <span className="text-white font-bold font-bold font-mono">{Math.round(weekProgress)}%</span>
           </div>
           <ProgressBar value={weekProgress} />
         </motion.div>
@@ -139,8 +139,8 @@ export default function DashboardPage() {
                     className={`
                       relative p-5 rounded-2xl border transition-all duration-300
                       ${isLocked
-                        ? 'bg-gray-900/30 border-gray-800/50 opacity-60 cursor-not-allowed'
-                        : 'bg-gray-900/80 border-gray-700 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.1)] cursor-pointer'
+                        ? 'bg-white/5 backdrop-blur-md/30 border-gray-800/50 opacity-60 cursor-not-allowed'
+                        : 'bg-white/5 backdrop-blur-md/80 border-gray-700 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.1)] cursor-pointer'
                       }
                       ${isInProgress ? 'border-cyan-500/50 shadow-[0_0_15px_rgba(0,240,255,0.1)]' : ''}
                       ${isCompleted ? 'border-emerald-500/50 bg-emerald-950/20' : ''}
@@ -157,7 +157,7 @@ export default function DashboardPage() {
                       <div className="text-gray-500">
                         {isLocked && <Lock className="w-5 h-5" />}
                         {isCompleted && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
-                        {isInProgress && <PlayCircle className="w-5 h-5 text-cyan-400" />}
+                        {isInProgress && <PlayCircle className="w-5 h-5 text-white font-bold" />}
                       </div>
                     </div>
 
@@ -173,7 +173,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="bg-gray-900/80 border border-cyan-500/30 rounded-2xl p-6 md:p-8 backdrop-blur-sm"
+              className="bg-white/5 backdrop-blur-md/80 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm"
             >
               <button
                 onClick={() => setSelectedDay(null)}
@@ -186,7 +186,7 @@ export default function DashboardPage() {
                 <span className="text-5xl">{selectedDay.icon}</span>
                 <div>
                   <h2 className="text-3xl font-bold text-white">{selectedDay.title}</h2>
-                  <p className="text-cyan-400 font-medium">{selectedDay.titlePt}</p>
+                  <p className="text-white font-bold font-medium">{selectedDay.titlePt}</p>
                 </div>
               </div>
 
@@ -195,7 +195,7 @@ export default function DashboardPage() {
               {/* Fluency Cycle Steps */}
               <div className="space-y-6">
                 {/* Step 1: Teoria */}
-                <div className="bg-gray-950/50 border border-gray-800 rounded-xl p-5">
+                <div className="bg-black/50 border border-gray-800 rounded-xl p-5">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center border border-purple-500/30">
                       <BookOpen className="w-4 h-4 text-purple-400" />
@@ -204,7 +204,7 @@ export default function DashboardPage() {
                   </div>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {selectedDay.vocabulary.map((vocab, i) => (
-                      <li key={i} className="bg-gray-900 border border-gray-800 rounded-lg p-3">
+                      <li key={i} className="bg-white/5 backdrop-blur-md border border-gray-800 rounded-lg p-3">
                         <span className="block font-bold text-gray-200">{vocab.en}</span>
                         <span className="block text-sm text-gray-500">{vocab.pt}</span>
                       </li>
@@ -213,7 +213,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Step 2: Prática */}
-                <div className="bg-gray-950/50 border border-gray-800 rounded-xl p-5">
+                <div className="bg-black/50 border border-gray-800 rounded-xl p-5">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
                       <Mic className="w-4 h-4 text-emerald-400" />
@@ -223,7 +223,7 @@ export default function DashboardPage() {
                   <p className="text-sm text-gray-400 mb-3">Leia essas frases em voz alta antes de entrar na conversa real:</p>
                   <ul className="space-y-2">
                     {selectedDay.practicePhrases.map((phrase, i) => (
-                      <li key={i} className="bg-gray-900 border border-gray-800 rounded-lg p-3 text-gray-200 font-medium">
+                      <li key={i} className="bg-white/5 backdrop-blur-md border border-gray-800 rounded-lg p-3 text-gray-200 font-medium">
                         "{phrase}"
                       </li>
                     ))}
@@ -231,19 +231,19 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Step 3: Imersão */}
-                <div className="bg-gray-950/50 border border-gray-800 rounded-xl p-5 text-center">
+                <div className="bg-black/50 border border-gray-800 rounded-xl p-5 text-center">
                   <div className="flex justify-center mb-4">
-                    <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
-                      <Headset className="w-6 h-6 text-cyan-400" />
+                    <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center border border-white/10">
+                      <Headset className="w-6 h-6 text-white font-bold" />
                     </div>
                   </div>
                   <h3 className="text-xl font-bold text-white mb-2">Etapa 3: Imersão (Intercâmbio)</h3>
                   <p className="text-gray-400 mb-6 max-w-md mx-auto">
                     Agora é com você. O Coach D vai interpretar um personagem neste cenário. Tente usar o vocabulário que você acabou de aprender.
                   </p>
-                  <NeonButton variant="cyan" size="lg" className="w-full sm:w-auto px-12" onClick={startImmersion}>
+                  <GlassButton variant="primary" size="lg" className="w-full sm:w-auto px-12" onClick={startImmersion}>
                     Iniciar Conversa
-                  </NeonButton>
+                  </GlassButton>
                 </div>
               </div>
             </motion.div>

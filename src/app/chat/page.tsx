@@ -9,7 +9,7 @@ import {
   Sparkles, Loader2, AlertCircle
 } from 'lucide-react';
 import MicrophoneButton from '@/components/MicrophoneButton';
-import NeonButton from '@/components/NeonButton';
+import GlassButton from '@/components/GlassButton';
 import { speak, stopSpeaking, isSpeechSynthesisSupported } from '@/lib/speech';
 import { useAppStore } from '@/store/useAppStore';
 import { weeklyPlan } from '@/lib/weeklyPlan';
@@ -104,7 +104,7 @@ function ChatInterface() {
   return (
     <>
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-4 py-3 border-b border-gray-800/50 bg-gray-950/80 backdrop-blur-sm">
+      <header className="relative z-10 flex items-center justify-between px-4 py-3 border-b border-gray-800/50 bg-black/80 backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <button onClick={() => router.push('/dashboard')} className="text-gray-500 hover:text-gray-300 transition-colors focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-md p-1">
             <ArrowLeft className="w-5 h-5" />
@@ -116,7 +116,7 @@ function ChatInterface() {
             </div>
             <div>
               <h1 className="text-sm font-bold text-white flex items-center gap-1">
-                Coach D <Sparkles className="w-3 h-3 text-cyan-400" />
+                Coach D <Sparkles className="w-3 h-3 text-white font-bold" />
               </h1>
               <p className="text-xs text-gray-400">
                 {isLoading ? 'Typing...' : isSpeaking ? '🔊 Speaking...' : 'Online'}
@@ -131,7 +131,7 @@ function ChatInterface() {
             if (isSpeaking) stopSpeaking();
           }}
           className={`p-2 rounded-lg transition-all duration-300 focus-visible:ring-2 focus-visible:ring-cyan-500 ${
-            autoSpeak ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30' : 'bg-gray-800/50 text-gray-500 border border-gray-700/50'
+            autoSpeak ? 'bg-cyan-500/10 text-white font-bold border border-white/10' : 'bg-gray-800/50 text-gray-500 border border-gray-700/50'
           }`}
           title={autoSpeak ? 'Auto-speak ON' : 'Auto-speak OFF'}
         >
@@ -159,15 +159,15 @@ function ChatInterface() {
               className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.role === 'assistant' && (
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-4 h-4 text-cyan-400" />
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-4 h-4 text-white font-bold" />
                 </div>
               )}
 
               <div className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 shadow-sm ${
                   message.role === 'user'
                     ? 'bg-cyan-600/20 border border-cyan-500/20 text-cyan-50'
-                    : 'bg-gray-900 border border-gray-800 text-gray-100'
+                    : 'bg-white/5 backdrop-blur-md border border-gray-800 text-gray-100'
                 }`}
               >
                 <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
@@ -176,7 +176,7 @@ function ChatInterface() {
                     <button
                       onClick={() => speakMessage(message.content, message.id)}
                       className={`p-1 rounded transition-colors focus-visible:ring-1 focus-visible:ring-cyan-500 ${
-                        speakingMessageId === message.id ? 'text-cyan-400 animate-pulse' : 'text-gray-500 hover:text-cyan-400'
+                        speakingMessageId === message.id ? 'text-white font-bold animate-pulse' : 'text-gray-500 hover:text-white font-bold'
                       }`}
                       aria-label="Ouvir mensagem"
                     >
@@ -197,11 +197,11 @@ function ChatInterface() {
 
         {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3 justify-start">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center">
-              <Bot className="w-4 h-4 text-cyan-400" />
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center">
+              <Bot className="w-4 h-4 text-white font-bold" />
             </div>
-            <div className="bg-gray-900 border border-gray-800 rounded-2xl px-4 py-3 flex items-center gap-2">
-              <Loader2 className="w-4 h-4 text-cyan-400 animate-spin" />
+            <div className="bg-white/5 backdrop-blur-md border border-gray-800 rounded-2xl px-4 py-3 flex items-center gap-2">
+              <Loader2 className="w-4 h-4 text-white font-bold animate-spin" />
               <span className="text-sm text-gray-400">Coach D is thinking...</span>
             </div>
           </motion.div>
@@ -210,7 +210,7 @@ function ChatInterface() {
       </div>
 
       {/* Input area */}
-      <div className="relative z-10 border-t border-gray-800/80 bg-gray-950 p-4">
+      <div className="relative z-10 border-t border-gray-800/80 bg-black p-4">
         <div className="max-w-2xl mx-auto flex flex-col gap-3">
           <div className="flex justify-center">
             <MicrophoneButton onTranscript={handleTranscript} disabled={isLoading} mode="hold" />
@@ -222,12 +222,12 @@ function ChatInterface() {
               onChange={handleInputChange}
               placeholder="Type your message in English..."
               disabled={isLoading}
-              className="flex-1 bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all disabled:opacity-50"
+              className="flex-1 bg-white/5 backdrop-blur-md border border-gray-700 rounded-xl px-4 py-3 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all disabled:opacity-50"
               aria-label="Campo de texto da mensagem"
             />
-            <NeonButton type="submit" variant="cyan" size="md" disabled={!input.trim() || isLoading} className="shrink-0" aria-label="Enviar mensagem">
+            <GlassButton type="submit" variant="primary" size="md" disabled={!input.trim() || isLoading} className="shrink-0" aria-label="Enviar mensagem">
               <Send className="w-4 h-4" />
-            </NeonButton>
+            </GlassButton>
           </form>
           <p className="text-center text-xs text-gray-600">
             🎙️ Segure o microfone para falar • Digite ou fale em inglês
@@ -240,16 +240,16 @@ function ChatInterface() {
 
 export default function ChatPage() {
   return (
-    <div className="h-screen bg-gray-950 flex flex-col relative overflow-hidden">
+    <div className="h-screen bg-black flex flex-col relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[50%] w-[300px] h-[300px] rounded-full bg-cyan-500/5 blur-[100px]" />
-        <div className="absolute bottom-[-10%] right-[20%] w-[300px] h-[300px] rounded-full bg-purple-500/5 blur-[100px]" />
+        <div className="absolute top-[-10%] left-[50%] w-[300px] h-[300px] rounded-full bg-white/5 blur-[100px]" />
+        <div className="absolute bottom-[-10%] right-[20%] w-[300px] h-[300px] rounded-full bg-white/5 blur-[100px]" />
       </div>
       
       <Suspense fallback={
         <div className="flex-1 flex items-center justify-center relative z-10">
-          <Loader2 className="w-8 h-8 text-cyan-500 animate-spin" />
+          <Loader2 className="w-8 h-8 text-white animate-spin" />
         </div>
       }>
         <ChatInterface />
