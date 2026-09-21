@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Rocket, Mic, Brain, Trophy, ChevronRight, Sparkles, Globe2 } from 'lucide-react';
 import GlassButton from '@/components/GlassButton';
+import AnimatedGlobe from '@/components/AnimatedGlobe';
+import AnimatedWave from '@/components/AnimatedWave';
 
 const features = [
   {
@@ -11,28 +13,28 @@ const features = [
     title: 'Voice-First Learning',
     description: 'Practice speaking from day one. Our AI listens, corrects, and guides your pronunciation.',
     color: 'text-white font-bold',
-    glow: 'group-hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]',
+    glow: 'group-hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]',
   },
   {
     icon: Brain,
     title: 'AI-Powered Tutor',
     description: 'Conversations that adapt to your level. No scripts — real, dynamic English practice.',
-    color: 'text-purple-400',
-    glow: 'group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]',
+    color: 'text-gray-200',
+    glow: 'group-hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]',
   },
   {
     icon: Trophy,
     title: 'Belt System',
     description: 'Track your progress with Faixa Branca → Azul → Preta. Level up like a true fighter.',
-    color: 'text-orange-400',
-    glow: 'group-hover:shadow-[0_0_30px_rgba(251,146,60,0.15)]',
+    color: 'text-gray-300',
+    glow: 'group-hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]',
   },
   {
     icon: Globe2,
     title: 'Street-Smart English',
     description: 'Learn real English — slang, idioms, and expressions that natives actually use.',
-    color: 'text-emerald-400',
-    glow: 'group-hover:shadow-[0_0_30px_rgba(52,211,153,0.15)]',
+    color: 'text-gray-400',
+    glow: 'group-hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]',
   },
 ];
 
@@ -67,16 +69,9 @@ export default function LandingPage() {
         <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-white/5 blur-[120px]" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-white/5 blur-[120px]" />
         <div className="absolute top-[40%] left-[50%] w-[400px] h-[400px] rounded-full bg-pink-500/3 blur-[100px]" />
-
-        {/* Grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,240,255,0.3) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0,240,255,0.3) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px',
-          }}
-        />
+        <div className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-[0.04] pointer-events-none">
+          <AnimatedGlobe />
+        </div>
       </div>
 
       {/* Navigation */}
@@ -87,42 +82,42 @@ export default function LandingPage() {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center gap-2">
-          <Sparkles className="w-6 h-6 text-white font-bold" />
-          <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+          <Sparkles className="w-6 h-6 text-white" />
+          <span className="text-xl font-black tracking-tight text-white">
             Desenrola English
           </span>
         </div>
       </motion.nav>
 
       {/* Hero Section */}
-      <main className="relative z-10 max-w-7xl mx-auto px-6">
-        <motion.section
-          className="flex flex-col items-center text-center pt-16 pb-20 md:pt-24 md:pb-28"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Badge */}
+      <main className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-20">
+        <div className="text-center max-w-4xl mx-auto">
           <motion.div
-            variants={fadeInUp}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-8"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="space-y-8"
           >
-            <Rocket className="w-4 h-4 text-white font-bold" />
-            <span className="text-sm text-cyan-300 font-medium">Missão: Fluência até 2027</span>
-          </motion.div>
+            <motion.div variants={fadeInUp} className="flex justify-center mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <AnimatedWave className="h-4 mr-2" />
+                <span className="text-sm font-semibold tracking-wider text-gray-200">
+                  DESENROLA ENGLISH 2027
+                </span>
+              </div>
+            </motion.div>
 
-          {/* Main heading */}
-          <motion.h1
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight mb-6 max-w-4xl"
-          >
-            <span className="text-white">Seu inglês vai </span>
-            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              desenrolar
-            </span>
-            <br />
-            <span className="text-white">de verdade.</span>
-          </motion.h1>
+            <motion.h1 
+              variants={fadeInUp}
+              className="text-5xl md:text-7xl font-black text-white tracking-tight leading-tight"
+            >
+              Fale Inglês com <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500">
+                Confiança
+              </span>{' '}
+              <span className="text-white">de verdade.</span>
+            </motion.h1>
+          </motion.div>
 
           {/* Subtitle */}
           <motion.p
@@ -159,14 +154,14 @@ export default function LandingPage() {
               { value: '100%', label: 'Por voz' },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col">
-                <span className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="text-3xl font-bold text-white">
                   {stat.value}
                 </span>
                 <span className="text-sm text-gray-500 mt-1">{stat.label}</span>
               </div>
             ))}
           </motion.div>
-        </motion.section>
+        </div>
 
         {/* Features Grid */}
         <motion.section
