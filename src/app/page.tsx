@@ -122,7 +122,7 @@ export default function LandingPage() {
           {/* Subtitle */}
           <motion.p
             variants={fadeInUp}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Chega de traduzir na cabeça. Aprenda inglês falando, ouvindo e
             pensando em inglês — com um tutor de IA que entende seu nível e
@@ -130,7 +130,7 @@ export default function LandingPage() {
           </motion.p>
 
           {/* CTA Button */}
-          <motion.div variants={fadeInUp}>
+          <motion.div variants={fadeInUp} className="flex justify-center">
             <GlassButton
               variant="primary"
               size="lg"
