@@ -28,15 +28,22 @@ Always respond in English unless the user is clearly struggling, then you can br
     const SYSTEM_PROMPT = basePrompt + roleplayPrompt;
 
     if (!process.env.GEMINI_API_KEY) {
-      // Simulate a response if no key is set (Mock behavior)
       let response = "Hey! Let's practice some English today!";
       if (currentDay) {
          response = `[Mock Mode] I am ready to start the "${currentDay.title}" roleplay! However, the GEMINI_API_KEY is not configured in .env.local, so I cannot generate real responses right now.`;
       }
       
-      // Simulate slight network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      return NextResponse.json({ text: response });
+      // Criar um mock stream que o Vercel AI SDK entenda
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          const chunk = encoder.encode(`0:"${response}"\n`);
+          controller.enqueue(chunk);
+          controller.close();
+        }
+      });
+      
+      return new Response(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     }
 
     // Call Gemini with Streaming using AI SDK

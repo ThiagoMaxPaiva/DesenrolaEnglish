@@ -20,9 +20,14 @@ export default function DashboardPage() {
   } = useAppStore();
 
   const [selectedDay, setSelectedDay] = useState<WeekDay | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (!hasCompletedPlacement) {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted && !hasCompletedPlacement) {
       router.push('/placement');
     }
   }, [hasCompletedPlacement, router]);
@@ -57,6 +62,7 @@ export default function DashboardPage() {
     }
   };
 
+  if (!isMounted) return null;
   if (!hasCompletedPlacement) return null;
 
   return (
