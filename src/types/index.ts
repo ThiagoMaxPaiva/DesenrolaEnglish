@@ -11,6 +11,12 @@ export interface UserState {
 
 export type TaskStatus = 'locked' | 'available' | 'in-progress' | 'completed';
 
+export interface VocabularyItem {
+  en: string;
+  pt: string;
+  audio?: string;
+}
+
 export interface WeekDay {
   id: string;
   day: string;
@@ -20,7 +26,10 @@ export interface WeekDay {
   description: string;
   icon: string;
   duration: string;
-  tasks: string[];
+  // Novos campos para a Metodologia Fluency Pass
+  vocabulary: VocabularyItem[];
+  practicePhrases: string[];
+  roleplayContext: string;
 }
 
 export interface PlacementQuestion {

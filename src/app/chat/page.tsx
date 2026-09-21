@@ -1,20 +1,26 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useChat } from 'ai/react';
 import {
   Send, ArrowLeft, Volume2, VolumeX, Bot, User,
-  Sparkles, Loader2, MessageCircle, AlertCircle
+  Sparkles, Loader2, AlertCircle
 } from 'lucide-react';
 import MicrophoneButton from '@/components/MicrophoneButton';
 import NeonButton from '@/components/NeonButton';
 import { speak, stopSpeaking, isSpeechSynthesisSupported } from '@/lib/speech';
 import { useAppStore } from '@/store/useAppStore';
+import { weeklyPlan } from '@/lib/weeklyPlan';
 
-export default function ChatPage() {
+function ChatInterface() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const dayId = searchParams.get('day');
+  
+  const currentDay = weeklyPlan.find(d => d.id === dayId);
+
   const { level, incrementStreak } = useAppStore();
 
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -26,6 +32,7 @@ export default function ChatPage() {
   // Vercel AI SDK useChat hook
   const { messages, input, handleInputChange, handleSubmit, isLoading, append, setMessages } = useChat({
     api: '/api/chat',
+    body: { dayId },
     onFinish: (message) => {
       if (autoSpeak) {
         speakMessage(message.content, message.id);
@@ -48,8 +55,12 @@ export default function ChatPage() {
   useEffect(() => {
     if (messages.length === 0) {
       const greetingId = 'greeting-1';
-      const text = `Hey! I'm Coach D, your English tutor. 🏆 I see you're at the ${level === 'preta' ? 'Advanced' : level === 'azul' ? 'Intermediate' : 'Beginner'} level — awesome! Let's practice some English. What do you want to talk about today?`;
+      let text = `Hey! I'm Coach D. Let's practice some English. What do you want to talk about today?`;
       
+      if (currentDay) {
+        text = `Welcome to the "${currentDay.title}" immersion! 🌎 I'm getting into character right now... Let's start the roleplay whenever you're ready! (Speak or type your first sentence)`;
+      }
+
       setMessages([{ id: greetingId, role: 'assistant', content: text }]);
       
       if (autoSpeak && isSpeechSynthesisSupported()) {
@@ -57,7 +68,7 @@ export default function ChatPage() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentDay]);
 
   const speakMessage = useCallback(async (text: string, id: string) => {
     if (!isSpeechSynthesisSupported()) return;
@@ -91,13 +102,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="h-screen bg-gray-950 flex flex-col relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[50%] w-[300px] h-[300px] rounded-full bg-cyan-500/5 blur-[100px]" />
-        <div className="absolute bottom-[-10%] right-[20%] w-[300px] h-[300px] rounded-full bg-purple-500/5 blur-[100px]" />
-      </div>
-
+    <>
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between px-4 py-3 border-b border-gray-800/50 bg-gray-950/80 backdrop-blur-sm">
         <div className="flex items-center gap-3">
@@ -229,6 +234,26 @@ export default function ChatPage() {
           </p>
         </div>
       </div>
+    </>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <div className="h-screen bg-gray-950 flex flex-col relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[50%] w-[300px] h-[300px] rounded-full bg-cyan-500/5 blur-[100px]" />
+        <div className="absolute bottom-[-10%] right-[20%] w-[300px] h-[300px] rounded-full bg-purple-500/5 blur-[100px]" />
+      </div>
+      
+      <Suspense fallback={
+        <div className="flex-1 flex items-center justify-center relative z-10">
+          <Loader2 className="w-8 h-8 text-cyan-500 animate-spin" />
+        </div>
+      }>
+        <ChatInterface />
+      </Suspense>
     </div>
   );
 }
