@@ -242,6 +242,7 @@ function ChatInterface() {
             <input
               value={input}
               onChange={handleInputChange}
+              maxLength={1000}
               placeholder="Type your message in English..."
               disabled={isLoading}
               className="flex-1 bg-white/5 backdrop-blur-md border border-gray-700 rounded-xl px-4 py-3 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-white/50 focus:ring-1 focus:ring-white/50 transition-all disabled:opacity-50"
