@@ -3,9 +3,28 @@ import { google } from '@ai-sdk/google';
 import { NextResponse } from 'next/server';
 import { weeklyPlan } from '@/lib/weeklyPlan';
 
+// Prevent vercel serverless function from running too long (max 30s for hobby)
+export const maxDuration = 30;
+
 export async function POST(req: Request) {
   try {
     const { messages, dayId } = await req.json();
+
+    // -- SECURITY PAYLOAD VALIDATION --
+    // Prevent abuse by limiting the array size and character count
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+    }
+    
+    // Limit conversation context to last 20 messages to save tokens
+    const recentMessages = messages.slice(-20);
+    
+    // Check if the last message isn't abnormally large (e.g. max 1000 characters)
+    const lastMessage = recentMessages[recentMessages.length - 1];
+    if (lastMessage && lastMessage.content.length > 1000) {
+      return NextResponse.json({ error: 'Message too long. Max 1000 characters.' }, { status: 413 });
+    }
+    // ---------------------------------
 
     // Find the current day's context
     const currentDay = weeklyPlan.find((d) => d.id === dayId);
@@ -50,7 +69,7 @@ Always respond in English unless the user is clearly struggling, then you can br
     const result = await streamText({
       model: google('gemini-1.5-flash'),
       system: SYSTEM_PROMPT,
-      messages,
+      messages: recentMessages,
     });
 
     return result.toAIStreamResponse();
