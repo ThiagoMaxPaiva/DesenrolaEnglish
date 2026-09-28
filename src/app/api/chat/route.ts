@@ -6,8 +6,36 @@ import { weeklyPlan } from '@/lib/weeklyPlan';
 // Prevent vercel serverless function from running too long (max 30s for hobby)
 export const maxDuration = 30;
 
+// In-memory store for basic rate limiting (IP -> { count, resetTime })
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
 export async function POST(req: Request) {
   try {
+    // -- RATE LIMITING --
+    const ip = req.headers.get('x-forwarded-for') || 'unknown-ip';
+    const now = Date.now();
+    const windowMs = 60 * 1000; // 1 minute window
+    const maxRequests = 15; // Max 15 messages per minute
+
+    const rateData = rateLimitMap.get(ip) || { count: 0, resetTime: now + windowMs };
+    
+    if (now > rateData.resetTime) {
+      rateData.count = 1;
+      rateData.resetTime = now + windowMs;
+    } else {
+      rateData.count++;
+    }
+    
+    rateLimitMap.set(ip, rateData);
+
+    if (rateData.count > maxRequests) {
+      console.warn(`Rate limit exceeded for IP: ${ip}`);
+      return NextResponse.json(
+        { error: 'Too many requests. Please wait a minute before sending more messages.' },
+        { status: 429 }
+      );
+    }
+    // -------------------
     const { messages, dayId } = await req.json();
 
     // -- SECURITY PAYLOAD VALIDATION --
